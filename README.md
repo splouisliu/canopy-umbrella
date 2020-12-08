@@ -1,6 +1,6 @@
 # canopy-umbrella
 
-These MATLAB simulations model the deployment and adjustment mechanisms of two umbrella designs. It incorporates vector loop analysis, which allows measurements to be taken at any point. Example measurements include:
+These MATLAB simulations model the deployment and adjustment mechanisms of two umbrella designs. They are used to make performance comparisons and optimize physical design parameters. It incorporates vector loop analysis, which allows measurements to be taken at any point. Example measurements include:
 
   - Position, velocity, acceleration at a particular point
   - Deployment time
