@@ -1,3 +1,5 @@
+set(0,'DefaultFigureUnits', 'normalized', 'DefaultFigurePosition', [0.2 0.3 0.35 0.5]);
+
 %% Initialization (Refer to "Reference_original.jpg")
 
 close all;
@@ -19,6 +21,7 @@ min_slider_height = 4;
 increments = 50;
 DG_lengths = linspace(closed_DG, open_DG, increments);     
 slider_heights = linspace(min_slider_height, max_slider_height, increments);    % represents point B
+
 
 %% Phase 1: Raising the slider
 
@@ -63,6 +66,26 @@ for i= 1:increments
     Fx(i) = 2*Gx(i) - Bx(i);
     Fy(i) = 2*Gy(i) - By(i);
     
+    %% Convert from ft to m
+    Ax(i) = Ax(i) * 0.3048;
+    Ay(i) = Ay(i) * 0.3048;
+    Bx(i) = Bx(i) * 0.3048;
+    By(i) = By(i) * 0.3048;
+    Cx(i) = Cx(i) * 0.3048;
+    Cy(i) = Cy(i) * 0.3048;
+    Dx(i) = Dx(i) * 0.3048;
+    Dy(i) = Dy(i) * 0.3048;
+    Ex(i) = Ex(i) * 0.3048;
+    Ey(i) = Ey(i) * 0.3048;
+    Fx(i) = Fx(i) * 0.3048;
+    Fy(i) = Fy(i) * 0.3048;
+    Gx(i) = Gx(i) * 0.3048;
+    Gy(i) = Gy(i) * 0.3048;
+    Hx(i) = Hx(i) * 0.3048;
+    Hy(i) = Hy(i) * 0.3048;
+    Ix(i) = Ix(i) * 0.3048;
+    Iy(i) = Iy(i) * 0.3048;
+    
     
     %% Plots
     plot( [Ax(i) Cx(i)], [Ay(i), Cy(i)],'Color','b','LineWidth',3);
@@ -75,24 +98,25 @@ for i= 1:increments
     plot( [Dx(i) Fx(i)], [Dy(i), Fy(i)],'Color','r','LineWidth',3);
     plot( [Dx(i) Gx(i)], [Dy(i), Gy(i)],'Color','black','LineWidth',1);
     
-    xlabel("x (ft)");
-    ylabel("y (ft)");
-    xlim([-1 11]);
-    ylim([0 13]);
-    title("Original Design");
+    title("Phase 1: Raising Slider Mechanism");
+    xlabel("x (m)");
+    ylabel("y (m)");
+    xlim([-0.5 4]);
+    ylim([0 4.5]);
     daspect([1 1 1]);
     
-    pause(0.02);
+    pause(0.015);
 end
 
-pause(2);
+pause(0.4);
+
 
 %% Phase 2: Pulling the string to open canopy
 
 for i= increments+1:2*increments
     hold off;
     
-    %% Static points calculation: A, B, C, D, E
+    % Static points calculation: A, B, C, D, E
     Ax(i) = 0;
     Ay(i) = 0;
     Cx(i) = 0;
@@ -112,7 +136,7 @@ for i= increments+1:2*increments
     Dy(i) = By(i) + length_BD*cos(theta);
     
     
-    %% Dynamic points calculation:
+    % Dynamic points calculation:
     length_DH = 0.5*DG_lengths(i - increments);
     length_ED = length_BD - length_BE;
     length_EH = sqrt(length_ED^2 - length_DH^2);
@@ -128,7 +152,27 @@ for i= increments+1:2*increments
     Fx(i) = 2*Gx(i) - Bx(i);
     Fy(i) = 2*Gy(i) - By(i);
     
-    %% Plots
+    % Convert from ft to m
+    Ax(i) = Ax(i) * 0.3048;
+    Ay(i) = Ay(i) * 0.3048;
+    Bx(i) = Bx(i) * 0.3048;
+    By(i) = By(i) * 0.3048;
+    Cx(i) = Cx(i) * 0.3048;
+    Cy(i) = Cy(i) * 0.3048;
+    Dx(i) = Dx(i) * 0.3048;
+    Dy(i) = Dy(i) * 0.3048;
+    Ex(i) = Ex(i) * 0.3048;
+    Ey(i) = Ey(i) * 0.3048;
+    Fx(i) = Fx(i) * 0.3048;
+    Fy(i) = Fy(i) * 0.3048;
+    Gx(i) = Gx(i) * 0.3048;
+    Gy(i) = Gy(i) * 0.3048;
+    Hx(i) = Hx(i) * 0.3048;
+    Hy(i) = Hy(i) * 0.3048;
+    Ix(i) = Ix(i) * 0.3048;
+    Iy(i) = Iy(i) * 0.3048;
+    
+    % Plots
     plot( [Ax(i) Cx(i)], [Ay(i), Cy(i)],'Color','b','LineWidth',3);
     hold on;
     plot( [Bx(i) Dx(i)], [By(i), Dy(i)],'Color','r','LineWidth',3); 
@@ -138,22 +182,22 @@ for i= increments+1:2*increments
     plot( [Gx(i) Ix(i)], [Gy(i), Iy(i)],'Color','r','LineWidth',3);
     plot( [Dx(i) Fx(i)], [Dy(i), Fy(i)],'Color','r','LineWidth',3);
     plot( [Dx(i) Gx(i)], [Dy(i), Gy(i)],'Color','black','LineWidth',1);
-
-    xlabel("x (ft)");
-    ylabel("y (ft)");
-    xlim([-1 11]);
-    ylim([0 13]);
+    
+    title("Phase 2: Deploying Canopy");
+    xlabel("x (m)");
+    ylabel("y (m)");
+    xlim([-0.5 4]);
+    ylim([0 4.5]);
     daspect([1 1 1]);
     
-    pause(0.02);
+    pause(0.015);
 end
 
-%% Velocity of Tip
+%% Calculation: Velocity of Tip
 
 % Phase 1
 max_t1 = 6;
 time = linspace(0, 6, increments);
-
 
 % Phase 2
 theta2_dot = 3*pi;            % r/s
@@ -178,6 +222,7 @@ xlabel("Time (t)");
 ylabel("Velocity (ft/s)");
 title("Velocity of Tip Through Opening Process");
 
+
 %% Phase 3: Tilt adjustment
 
 figure(4);
@@ -185,7 +230,7 @@ figure(4);
 for i= 1:increments
     hold off;
     
-    %% Position Calculations
+    % Position Calculations
     Ax(i) = 0;
     Ay(i) = 0;
     Cx(i) = 0;
@@ -221,7 +266,7 @@ for i= 1:increments
     Fy(i) = 2*Gy(i) - By(i);
     
     
-    %% Convert from ft to m
+    % Convert from ft to m
     Ax(i) = Ax(i) * 0.3048;
     Ay(i) = Ay(i) * 0.3048;
     Bx(i) = Bx(i) * 0.3048;
@@ -241,7 +286,7 @@ for i= 1:increments
     Ix(i) = Ix(i) * 0.3048;
     Iy(i) = Iy(i) * 0.3048;
     
-    %% Plots
+    % Plots
     plot( [Ax(i) Cx(i)], [Ay(i), Cy(i)],'Color','black','LineWidth',3);
     hold on;
     plot( [Bx(i) Dx(i)], [By(i), Dy(i)],'Color','r','LineWidth',3);
@@ -263,18 +308,19 @@ for i= 1:increments
         line([Bx(j) Fx(j)],[By(j) Fy(j)]);      %% Draws the angle trajectories
     end
     
-    title("Range of Tilt Adjustment in Original Design");
+    title("Phase 3: Range of Tilt Adjustment");
     xlabel("x (m)");
     ylabel("y (m)");
     xlim([-0.5 4]);
     ylim([0 4.5]);
     daspect([1 1 1]);
     
-    pause(0);
+    pause(0.015);
 end
+
+%% Calculation: Tilt Angle Range
 
 max_canopy_angle = atan((Fy(i) - By(i))/Fx(i) - Bx(i)) *180/pi
 min_canopy_angle = atan((Fy(1) - By(1))/Fx(1) - Bx(1)) *180/pi
 
 alpha = theta*180/pi
-%%

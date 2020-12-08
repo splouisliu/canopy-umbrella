@@ -4,6 +4,7 @@ close all;
 clear all;
 clc;
 
+% Units here all in feet!
 length_pole = 9;                % length of AB
 length_extension = 7.2;           % length of CB
 length_DE = 4.75;
@@ -23,7 +24,7 @@ figure(1);
 
 for i= 1:increments
     
-    %% Position Calculations
+    % Position Calculations
     Ax(i) = 0;
     Ay(i) = 0;
     Bx(i) = 0;
@@ -42,8 +43,19 @@ for i= 1:increments
     Cx(i) = length_extension*sin(theta);
     Cy(i) = length_pole - length_extension*cos(theta);
     
+    % Convert from ft to m
+    Ax(i) = Ax(i) * 0.3048;
+    Ay(i) = Ay(i) * 0.3048;
+    Bx(i) = Bx(i) * 0.3048;
+    By(i) = By(i) * 0.3048;
+    Cx(i) = Cx(i) * 0.3048;
+    Cy(i) = Cy(i) * 0.3048;
+    Dx(i) = Dx(i) * 0.3048;
+    Dy(i) = Dy(i) * 0.3048;
+    Ex(i) = Ex(i) * 0.3048;
+    Ey(i) = Ey(i) * 0.3048;
     
-    %% Plots
+    % Plots
     plot( [Ax(i) Bx(i)], [Ay(i), By(i)],'Color','black','LineWidth',3);
     hold on;
     plot( [Bx(i) Cx(i)], [By(i), Cy(i)],'Color','r','LineWidth',3); 
@@ -56,16 +68,19 @@ for i= 1:increments
     
     hold off;
     
-    title("New Design")
-    xlabel("x (ft)");
-    ylabel("y (ft)");
-    xlim([-1 8]);
-    ylim([0 11]);
+    title("Phase 1: Deploying Umbrella");
+    xlabel("x (m)");
+    ylabel("y (m)");
+    xlim([-0.5 3.5]);
+    ylim([0 5]);
     daspect([1 1 1]);
     
-    pause(0.1);
+    pause(0.02);
 end
-%% Velocity of Tip
+
+pause(2);
+
+%% Calculations: Velocity of Tip
 
 theta2_dot = 3*pi;              % r/s
 gear_ratio = 2;
@@ -87,9 +102,12 @@ speed_Cx = diff(Cx)/increment_t;
 speed_Cy = diff(Cy)/increment_t;
 velocity_C = sqrt(speed_Cx.^2 + speed_Cy.^2);
 
+% Convert to m
+velocity_C = velocity_C *0.3048;
+
 plot(time, [0 velocity_C]);
 xlabel("Time (t)");
-title("Velocity of Tip Through Opening Process (ft/s)");
+title("Velocity of Tip Through Opening Process (m/s)");
 
 
 %% Stage 2: Tilt adjustment
@@ -105,11 +123,11 @@ min_slider_height = 5.4;
 increments = 30;
 slider_heights = linspace(min_slider_height, max_slider_height, increments);     % represents point E
 
-figure(1);
+figure(3);
 
 for i= 1:increments
     
-    %% Position Calculations
+    % Position Calculations
     Ax(i) = 0;
     Ay(i) = 0;
     Bx(i) = 0;
@@ -129,7 +147,7 @@ for i= 1:increments
     Cy(i) = length_pole - length_extension*cos(theta);
     
     
-    %% Convert from ft to m
+    % Convert from ft to m
     Ax(i) = Ax(i) * 0.3048;
     Ay(i) = Ay(i) * 0.3048;
     Bx(i) = Bx(i) * 0.3048;
@@ -141,7 +159,7 @@ for i= 1:increments
     Ex(i) = Ex(i) * 0.3048;
     Ey(i) = Ey(i) * 0.3048;
 
-    %% Plots
+    % Plots
     plot( [Ax(i) Bx(i)], [Ay(i), By(i)],'Color','black','LineWidth',3);
     hold on;
     plot( [Bx(i) Cx(i)], [By(i), Cy(i)],'Color','r','LineWidth',3); 
@@ -158,24 +176,19 @@ for i= 1:increments
     
     hold off;
     
-    title("Range of Tilt Adjustment in New Design");
+    title("Phase 2: Range of Tilt Adjustment");
     xlabel("x (m)");
     ylabel("y (m)");
     xlim([-0.5 3.5]);
     ylim([0 5]);
     daspect([1 1 1]);
     
-    pause(0.1);
+    pause(0.05);
 end
 
+%% Calculations: Tilt Range
 
 max_canopy_angle = atan((Cy(i) - Ey(i))/Cx(i) - Ex(i)) *180/pi
 min_canopy_angle = atan((Cy(1) - Ey(1))/Cx(1) - Ex(1)) *180/pi
 
 alpha = asin(length_DB*sin(theta)/length_DE) *180/pi
-
-
-
-
-
-%%
